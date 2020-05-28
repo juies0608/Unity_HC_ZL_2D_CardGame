@@ -2,8 +2,21 @@
 using UnityEngine.UI;
 using System.Collections.Generic;       //系統.集合.一般
 
+/// <summary>
+/// 牌組管理器
+/// </summary>
 public class DeckManager : MonoBehaviour
 {
+    //清單<要存放的類型> 清單名稱 = 新增 清單物件
+    /// <summary>
+    /// 牌組內卡牌資料
+    /// </summary>
+    public List<CardData> deck = new List<CardData>();
+    /// <summary>
+    /// 牌組內卡牌遊戲物件
+    /// </summary>
+    public List<GameObject> deckGameObject = new List<GameObject>();
+
     [Header("牌組卡牌資訊")]
     public GameObject DeckObject;
     [Header("牌組內容")]
@@ -14,11 +27,13 @@ public class DeckManager : MonoBehaviour
     public Button btnStart;
     [Header("洗牌後牌組")]
     public Transform tranShuffle;
+    [Header("金幣")]
+    public Rigidbody coin;
+    [Header("遊戲畫面")]
+    public GameObject gameView;
 
-    /// <summary>
-    /// 牌組清單
-    /// </summary>
-    public List<CardData> deck = new List<CardData>();
+  
+    
 
     /// <summary>
     /// 牌組管理器實體物件
@@ -122,8 +137,6 @@ public class DeckManager : MonoBehaviour
         btnStart.interactable = false;
     }
 
-
- 
     /// <summary>
     /// 洗牌
     /// </summary>
@@ -172,6 +185,8 @@ public class DeckManager : MonoBehaviour
 
             //添加元件<圖鑑卡牌> 編號 = 卡牌.編號
             temp.gameObject.AddComponent<BookCard>().index = card.index;
+            //將生出來的卡牌物件放到清單內
+            deckGameObject.Add(temp.gameObject);
         }
     }
 
@@ -180,6 +195,10 @@ public class DeckManager : MonoBehaviour
     /// </summary>
     private void StartBattle()
     {
+        gameView.SetActive(true);       //顯示遊戲畫面
+
         Shuffle();
+        BattleManager.instance.StartBattle();
     }
+    
 }
