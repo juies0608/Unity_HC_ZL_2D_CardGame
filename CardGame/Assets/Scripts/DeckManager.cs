@@ -50,6 +50,27 @@ public class DeckManager : MonoBehaviour
         btnStart.onClick.AddListener(StartBattle);
     }
 
+    private void Update()
+    {
+        Choose30Card();
+    }
+
+    /// <summary>
+    /// 自選 30 張
+    /// </summary>
+    private void Choose30Card()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 1; j <= 15; j++)
+                {
+                    AddCard(j);
+                }
+            }
+        }
+    }
     /// <summary>
     /// 添加卡牌至牌組內
     /// </summary>
