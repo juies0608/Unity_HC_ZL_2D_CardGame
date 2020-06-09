@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,6 +18,12 @@ public class BattleManager : MonoBehaviour
     public Transform canvas;
     [Header("手牌區域")]
     public Transform handArea;
+    [Header("水晶"), Tooltip("水晶圖片,用來顯示的 10 張")]
+    public GameObject[] crystalObject;
+    [Header("水晶數量介面")]
+    public Text textCrystal;
+    [Header("擲金幣畫面")]
+    public GameObject coinView;
 
     /// <summary>
     /// 先後攻
@@ -25,10 +32,13 @@ public class BattleManager : MonoBehaviour
     /// </summary>
     private bool firstAttack;
 
+    private bool myTurn;
+    private int crystalTotal;
+
     /// <summary>
     /// 水晶數量
     /// </summary>
-    public int crystal = 1;
+    public int crystal;
 
     [Header("手排卡牌資訊")]
     /// <summary>
@@ -38,9 +48,24 @@ public class BattleManager : MonoBehaviour
     [Header("手牌卡牌遊戲物件")]
     public List<GameObject> handGameObject = new List<GameObject>();
 
+   
     private void Start()
     {
         instance = this;
+    }
+
+    public void EndTurn()
+    {
+        myTurn = false;
+    }
+
+    public void StartTurn()
+    {
+        myTurn = true;
+        crystalTotal++;
+        crystal = crystalTotal;
+        Crystal();
+        StartCoroutine(GetCard(1));
     }
     /// <summary>
     /// 開始遊戲
@@ -72,21 +97,49 @@ public class BattleManager : MonoBehaviour
     {
         //三元運算子
         //先後攻 = 布林運算? 成立 : 不成立
-        print(coin.transform.GetChild(0).position.y);
+        //print(coin.transform.GetChild(0).position.y);
 
         firstAttack = coin.transform.GetChild(0).position.y > 0.25 ?  true: false;
 
-        print("先後攻:" + firstAttack);
+        coinView.SetActive(false);  //隱藏金幣畫面
 
-        /** if (coin.rotation.x<0)
-         {
-             firstAttack = false;
-         }
-         else
-         {
-             firstAttack = true;
-         }*/
-        StartCoroutine(GetCard(3));
+        //如果 先攻 水晶 1 顆 , 卡牌 4 張
+        int card = 3;
+        if (firstAttack)
+        {
+            crystalTotal = 1;
+            crystal = 1;
+            card = 4;
+            
+        }
+        Crystal();
+
+       StartCoroutine(GetCard(card));
+    }
+
+    /// <summary>
+    /// 處理水晶數量
+    /// </summary>
+    private void Crystal()
+    { 
+        //顯示目前有幾顆水晶
+        for (int i = 0; i < crystal; i++)
+        {
+            crystalObject[0].SetActive(true);
+        }
+        textCrystal.text = crystal + " / 10";
+    }
+    /// <summary>
+    /// 更新水晶介面與圖片
+    /// </summary>
+    public void UpdateCrystal()
+    {
+        for (int i = 0; i < crystalObject.Length; i++)
+        {
+            if (i < crystal) continue;      //如果 迴圈編號 < 目前水晶數量 就繼續 (跳過幾次)
+            crystalObject[i].SetActive(false);
+        }
+        textCrystal.text = crystal + " / 10";
     }
 
     /// <summary>

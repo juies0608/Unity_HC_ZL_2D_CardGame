@@ -70,7 +70,7 @@ public class HandCard : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
     /// </summary>
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (rect.anchoredPosition.y >=50)   //如果開放時 y 軸 >=30
+        if (rect.anchoredPosition.y >=30)   //如果開放時 y 軸 >=30
         {
             checkCrystal();
         }
@@ -89,7 +89,8 @@ public class HandCard : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
         {
             inScene = true;                 //是否在場景上 = 是
             transform.SetParent(scene);     //父物建設為:場地
-            BattleManager.instance.crystal -= crystalCost;
+            BattleManager.instance.crystal -= crystalCost;      //扣掉水晶
+            BattleManager.instance.UpdateCrystal();     //更新水晶
         }
         else
         {
