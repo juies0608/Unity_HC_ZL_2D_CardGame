@@ -54,15 +54,21 @@ public class BattleManager : MonoBehaviour
         instance = this;
     }
 
+    /// <summary>
+    /// 我方結束
+    /// </summary>
     public void EndTurn()
     {
         myTurn = false;
     }
-
+    /// <summary>
+    /// 對方結束:水晶 +1
+    /// </summary>
     public void StartTurn()
     {
         myTurn = true;
         crystalTotal++;
+        crystalTotal = Mathf.Clamp(crystalTotal, 1, 10);        //夾住最大水晶數量
         crystal = crystalTotal;
         Crystal();
         StartCoroutine(GetCard(1));
@@ -163,8 +169,10 @@ public class BattleManager : MonoBehaviour
         }
         
     }
-
-   
+    /// <summary>
+    /// 手牌數量
+    /// </summary>
+    private int handCardCount;
 
     /// <summary>
     /// 顯示卡牌在移動到手上
@@ -174,6 +182,7 @@ public class BattleManager : MonoBehaviour
     {   
         RectTransform card = handGameObject[handGameObject.Count - 1].GetComponent<RectTransform>();        //取得手排最後一張[數量-1]
 
+        //進入右手邊中間位置
         card.SetParent(canvas);                     //將父物件設為畫布
         card.anchorMin = Vector2.one * 0.5f;       //設定中心點
         card.anchorMax = Vector2.one * 0.5f;       //設定中心點
@@ -188,6 +197,13 @@ public class BattleManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.35f);
 
+        if(handCardCount == 10)
+        {
+            print("爆掉手牌");
+        }
+        else
+        { 
+        //進入手牌
         card.localScale = Vector3.one * 0.5f;       //縮小
 
         while (card.anchoredPosition.y > -274)       //當 y >-27 執行移動
@@ -199,5 +215,7 @@ public class BattleManager : MonoBehaviour
         }
         card.SetParent(handArea);                           //受定父物件為手牌區域
         card.gameObject.AddComponent<HandCard>();           //添加手牌腳本 - 可拖拉
+        handCardCount++;                                    //手牌數量遞增
+        }
     }
 }
