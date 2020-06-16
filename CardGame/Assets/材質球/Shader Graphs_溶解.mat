@@ -20,9 +20,23 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_75511AD8:
+        m_Texture: {fileID: 2800000, guid: 45c7a17ca2523a3428f26ace598c4b50, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_CE7B5D24:
         m_Texture: {fileID: 2800000, guid: 26a1090df425e1748bcec5551fa49e0d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - AlphaClip: 0
+    - Boolean_13848DC4: 0
+    - Boolean_7DF0643F: 1
+    - Switch: 0
+    - Vector1_1C69413A: 50
+    - Vector1_815A8A96: 0
     m_Colors: []
