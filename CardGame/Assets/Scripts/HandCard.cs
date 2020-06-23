@@ -14,10 +14,15 @@ public class HandCard : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
 /// 卡牌座標資訊
 /// </summary>
     private RectTransform rect;
+
+    /// <summary>
+    /// 場景名稱
+    /// </summary>
+    public string sceneName;
     /// <summary>
     /// 場地
     /// </summary>
-    private Transform scene;
+    public Transform scene;
     
 
     /// <summary>
@@ -43,7 +48,8 @@ public class HandCard : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
         //int.Parse("123");     字串轉數值
         crystalCost = int.Parse(transform.Find("消耗").GetComponent<Text>().text);
 
-        scene = GameObject.Find("我方場地").transform;
+        scene = GameObject.Find(sceneName).transform;
+
     }
 
     /// <summary>

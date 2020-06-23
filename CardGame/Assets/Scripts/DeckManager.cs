@@ -8,16 +8,18 @@ using System.Collections.Generic;       //系統.集合.一般
 public class DeckManager : MonoBehaviour
 {
     //清單<要存放的類型> 清單名稱 = 新增 清單物件
+    [Header("牌組卡牌資訊")]
     /// <summary>
     /// 牌組內卡牌資料
     /// </summary>
     public List<CardData> deck = new List<CardData>();
+    [Header("牌組內卡牌遊戲物件")]
     /// <summary>
     /// 牌組內卡牌遊戲物件
     /// </summary>
     public List<GameObject> deckGameObject = new List<GameObject>();
 
-    [Header("牌組卡牌資訊")]
+    [Header("牌組物件")]
     public GameObject DeckObject;
     [Header("牌組內容")]
     public Transform contentDeck;
@@ -27,10 +29,7 @@ public class DeckManager : MonoBehaviour
     public Button btnStart;
     [Header("洗牌後牌組")]
     public Transform tranShuffle;
-    [Header("金幣")]
-    public Rigidbody coin;
-    [Header("遊戲畫面")]
-    public GameObject gameView;
+  
 
   
     
@@ -40,7 +39,9 @@ public class DeckManager : MonoBehaviour
     /// </summary>
     public static DeckManager instance;
 
-    private void Awake()
+    //protected保護 : 允許子類別使用成員
+    //virtual 虛擬 :允許子類別用 override 覆寫
+    protected virtual void Awake()
     {
         //牌組趕理器實體物件 = 此腳本
         instance = this;
@@ -50,24 +51,29 @@ public class DeckManager : MonoBehaviour
         btnStart.onClick.AddListener(StartBattle);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        Choose30Card();
+       if(Input.GetKeyDown(KeyCode.Alpha1)) Choose30Card();
     }
 
     /// <summary>
     /// 自選 30 張
     /// </summary>
-    private void Choose30Card()
+    protected virtual void Choose30Card()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        while(deck.Count < 30)
         {
-            for (int i = 0; i < 2; i++)
+            int r = Random.Range(1, GetCard.instance.cards.Length + 1);
+
+            //取得卡牌資訊
+            CardData card = GetCard.instance.cards[r - 1];
+
+            //牌組.尋找全部(卡牌 => 卡牌.等於(選取卡牌))
+            List<CardData> sameCard = deck.FindAll(c => c.Equals(card));
+
+            if (sameCard.Count < 2)
             {
-                for (int j = 1; j <= 15; j++)
-                {
-                    AddCard(j);
-                }
+                AddCard(r);
             }
         }
     }
@@ -91,8 +97,7 @@ public class DeckManager : MonoBehaviour
             {
 
             //牌組.增加(去德卡牌.實體物件.卡牌資料[編號])
-            deck.Add(GetCard.instance.cards[index -1]);
-            
+            deck.Add(card);
 
             Transform temp;
 
@@ -112,11 +117,13 @@ public class DeckManager : MonoBehaviour
            
 
             //更新卡牌數量
-            textDeckCount.text = "套牌數量:" + deck.Count + " / 30 ";
+            
             
             temp.Find("消耗").GetComponent<Text>().text = card.cost.ToString();
             temp.Find("名稱").GetComponent<Text>().text = card.name;
             temp.Find("數量").GetComponent<Text>().text = (sameCard.Count+1).ToString();
+
+            textDeckCount.text = "套牌數量:" + deck.Count + " / 30 ";
             }
             }
         //如果卡牌  等於 30 張 啟動開始遊戲按鈕 互動
@@ -215,9 +222,7 @@ public class DeckManager : MonoBehaviour
     /// 開始遊戲
     /// </summary>
     private void StartBattle()
-    {
-        gameView.SetActive(true);       //顯示遊戲畫面
-
+    { 
         Shuffle();
         BattleManager.instance.StartBattle();
     }

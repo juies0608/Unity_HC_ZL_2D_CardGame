@@ -13,150 +13,20 @@ MonoBehaviour:
   m_Name: AssetReferenceDB
   m_EditorClassIdentifier: 
   m_assets:
-  - m_assetDatabaseId: 00000000000000002000000000000000
-    m_importFrom: ProjectSettings/InputManager.asset
-    m_exportTo: 
-    m_variantName: 
   - m_assetDatabaseId: 00000000000000009000000000000000
     m_importFrom: ProjectSettings/QualitySettings.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 00000000000000006100000000000000
-    m_importFrom: ProjectSettings/GraphicsSettings.asset
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 2108d8603f3bd8a4889e438479b3fd2d
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Gold Coin - Single/Materials/Gold Coin - Single.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b772a2514763ae84b901bf65df52c86f
-    m_importFrom: "Assets/\u6750\u8CEA\u7403/\u6EB6\u89E3.shadergraph"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 68b9dd12780e0d240af09c51fdaae000
-    m_importFrom: "Assets/\u6750\u8CEA\u7403/URP.asset"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f51f72b37973e0e4aa8b169a7ec49197
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Silver Coin - Single/Mesh/Materials/goldCoin_Diffuse.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 24071304340076549a2e49390b69cdec
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Copper Coin - Single/Mesh/CopperCoin.fbx
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 83c43ff4797616741b9121073c7d1191
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Gold Coins/Mesh/GoldCoins.fbx
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: bc611405591932644952b671db55b4cb
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Silver Coins/Mesh/Materials/goldCoin_Diffuse.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: af9709c5be902e449bdcbddf1c235605
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Silver Coins/Mesh/SilverCoins.fbx
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: ab0c7b663d236f543990bd5d621d7732
-    m_importFrom: "Assets/\u6750\u8CEA\u7403/\u900F\u660E.mat"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: fcd23317047ce99448fc69521177129c
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Copper Coins/Mesh/CopperCoins.fbx
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 18678a28cef624aeb89c5717c46be35b
-    m_importFrom: Packages/com.unity.assetgraph/Editor/SettingTemplate/setting.fbx
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: dc7738a8898ee45489cbc1ea02df257f
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Gold Coins/Materials/Gold Coins Mat.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 1b0c2659d7cc0c74a9f6f637f85a79ca
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Gold Coin - Single/Mesh/Materials/goldCoin_Diffuse.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 5f9ee1799e7f21548ba0dd65ac83ea7f
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Gold Coin - Single/Mesh/GoldCoin.fbx
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 8926db1a03a5ea645bc84cb68fcf057b
-    m_importFrom: "Assets/\u6750\u8CEA\u7403/URP_Renderer.asset"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: f576fcca16564b34390813d3bcc9074e
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Silver Coin - Single/Mesh/SilverCoin.fbx
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 4925430b121aa0f4499acd79c734050f
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Silver Coins/Material/Silver Coins Mat.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 19560c4ce4813e6479913d642c1e6f9d
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Copper Coin - Single/Mesh/Materials/goldCoin_Diffuse.mat
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 0339035cbf0f3b944aeae44ac4f0259a
     m_importFrom: Assets/AssetGraph/AssetBundles/Cache/TemporalSettingFiles/AssetReferenceDB.asset
     m_exportTo: 
     m_variantName: 
-  - m_assetDatabaseId: 18b990ada69320241851d6392bb4e215
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Copper Coin - Single/Material/Copper Coin - Single.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: acd2303e567a77045a4f8b068ecc6293
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Silver Coin - Single/Material/Silver Coin - Single.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 0f630d4e9a874c74b9a34213266bf06e
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Copper Coins/Mesh/Materials/goldCoin_Diffuse.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: b06095be00f99c04bb0aa12975ce76e0
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Copper Coins/Material/Copper Coins Mat.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 3c375b9fa8dc63e4e93447bb63e68bcd
-    m_importFrom: Assets/LiquidFire Package 4 - BSH games/Devtoid - Gold Coins/3D
-      Assets/Gold Coins/Mesh/Materials/goldCoin_Diffuse.mat
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 98d0bbbf6a7acc341983252337a06f3c
-    m_importFrom: "Assets/\u6750\u8CEA\u7403/Shader Graphs_\u6EB6\u89E3.mat"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: dfbc085b3b0af5d42b94cbf731897a93
-    m_importFrom: "Assets/\u9810\u88FD\u7269/\u5361\u724C\u5716\u9451.prefab"
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: 45c7a17ca2523a3428f26ace598c4b50
-    m_importFrom: "Assets/\u5716\u7247/08_\u906E\u8272\u7247.png"
+  - m_assetDatabaseId: bb486d8fe78eb6e498dc9cc1153bdeb1
+    m_importFrom: "Assets/\u9078\u5361\u724C\u5834\u666F.unity"
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: d18899db5e5916f44abc362185bdc2d2
     m_importFrom: Assets/Scripts/BattleManager.cs
-    m_exportTo: 
-    m_variantName: 
-  - m_assetDatabaseId: bb486d8fe78eb6e498dc9cc1153bdeb1
-    m_importFrom: "Assets/\u9078\u5361\u724C\u5834\u666F.unity"
     m_exportTo: 
     m_variantName: 
   - m_assetDatabaseId: 6663b31272265dc40bb0c300c9425088

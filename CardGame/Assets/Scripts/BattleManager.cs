@@ -25,15 +25,7 @@ public class BattleManager : MonoBehaviour
     [Header("擲金幣畫面")]
     public GameObject coinView;
 
-    /// <summary>
-    /// 先後攻
-    /// true 先
-    /// false 後
-    /// </summary>
-    private bool firstAttack;
-
-    private bool myTurn;
-    private int crystalTotal;
+   
 
     /// <summary>
     /// 水晶數量
@@ -48,8 +40,17 @@ public class BattleManager : MonoBehaviour
     [Header("手牌卡牌遊戲物件")]
     public List<GameObject> handGameObject = new List<GameObject>();
 
-   
-    private void Start()
+    /// <summary>
+    /// 先後攻
+    /// true 先
+    /// false 後
+    /// </summary>
+    public bool firstAttack;
+
+    private bool myTurn;
+    protected int crystalTotal;
+
+   protected virtual void Start()
     {
         instance = this;
     }
@@ -71,7 +72,7 @@ public class BattleManager : MonoBehaviour
         crystalTotal = Mathf.Clamp(crystalTotal, 1, 10);        //夾住最大水晶數量
         crystal = crystalTotal;
         Crystal();
-        StartCoroutine(GetCard(1));
+        StartCoroutine(GetCard(1,DeckManager.instance,-200,-275));
     }
     /// <summary>
     /// 開始遊戲
@@ -92,6 +93,7 @@ public class BattleManager : MonoBehaviour
         coin.AddTorque(Random.Range(30, 120), 0, 0);    //旋轉
 
         Invoke("CheckCoin", 3);                         //延遲呼叫檢查方法
+        NPCBattleManager.instanceNPC.Invoke("CheckCoin", 3.5f);   //npc檢查金幣正反面
     }
 
     /// <summary>
@@ -99,7 +101,7 @@ public class BattleManager : MonoBehaviour
     /// rotation.x 為-1 -背面
     /// rotation.x 為 0 -正面
     /// </summary>
-    private void CheckCoin()
+   protected virtual void CheckCoin()
     {
         //三元運算子
         //先後攻 = 布林運算? 成立 : 不成立
@@ -120,13 +122,13 @@ public class BattleManager : MonoBehaviour
         }
         Crystal();
 
-       StartCoroutine(GetCard(card));
+       StartCoroutine(GetCard(card,DeckManager.instance,-200,-275));
     }
 
     /// <summary>
     /// 處理水晶數量
     /// </summary>
-    private void Crystal()
+    protected void Crystal()
     { 
         //顯示目前有幾顆水晶
         for (int i = 0; i < crystal; i++)
@@ -151,21 +153,21 @@ public class BattleManager : MonoBehaviour
     /// <summary>
     /// 抽牌組卡牌到手牌組
     /// </summary>
-    private IEnumerator GetCard(int count)
+    protected  IEnumerator GetCard(int count,DeckManager deck,int rightY,int handY)
     {
         for (int i = 0; i < count; i++)
         {
         //抽牌組第一張 放到 手牌 第一張 
-        battleDeck.Add(DeckManager.instance.deck[0]);
+        battleDeck.Add(deck.deck[0]);
         //刪除 牌組第一張
-        DeckManager.instance.deck.RemoveAt(0);
+        deck.deck.RemoveAt(0);
         //抽牌組第一張物件 放到 手牌 第一張
-        handGameObject.Add(DeckManager.instance.deckGameObject[0]);
-        //刪除 牌組第一張遊戲物件
-        DeckManager.instance.deckGameObject.RemoveAt(0);
+        handGameObject.Add(deck.deckGameObject[0]);
+         //刪除 牌組第一張遊戲物件
+        deck.deckGameObject.RemoveAt(0);
 
             //等待協程執行結束
-       yield return StartCoroutine(MoveCard());
+       yield return StartCoroutine(MoveCard(rightY,handY));
         }
         
     }
@@ -178,7 +180,7 @@ public class BattleManager : MonoBehaviour
     /// 顯示卡牌在移動到手上
     /// </summary>
     /// <returns></returns>
-    private IEnumerator MoveCard()
+    private IEnumerator MoveCard(int rightY,int handY)
     {   
         RectTransform card = handGameObject[handGameObject.Count - 1].GetComponent<RectTransform>();        //取得手排最後一張[數量-1]
 
@@ -190,7 +192,7 @@ public class BattleManager : MonoBehaviour
 
         while (card.anchoredPosition.x > 501)       //當 x >500 執行移動
         {
-            card.anchoredPosition = Vector2.Lerp(card.anchoredPosition, new Vector2(500, 2), 0.5f * Time.deltaTime * 50);       //取得手排第一張[0]
+            card.anchoredPosition = Vector2.Lerp(card.anchoredPosition, new Vector2(500, rightY), 0.5f * Time.deltaTime * 50);       //取得手排第一張[0]
 
             yield return null;                  //等待一個影格
         }
@@ -230,9 +232,13 @@ public class BattleManager : MonoBehaviour
         //進入手牌
         card.localScale = Vector3.one * 0.5f;       //縮小
 
+        bool con = true;
+
         while (card.anchoredPosition.y > -274)       //當 y >-27 執行移動
         {
-            card.anchoredPosition = Vector2.Lerp(card.anchoredPosition, new Vector2(0, -275), 0.5f * Time.deltaTime * 50);
+                if (handY < 0) con = card.anchoredPosition.y > handY + 1;
+                else con = card.anchoredPosition.y < handY - 1;
+            card.anchoredPosition = Vector2.Lerp(card.anchoredPosition, new Vector2(0, handY), 0.5f * Time.deltaTime * 50);
 
             yield return null;                  //等待一個影格
 
