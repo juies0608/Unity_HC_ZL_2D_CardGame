@@ -25,7 +25,7 @@ public class BattleManager : MonoBehaviour
     [Header("擲金幣畫面")]
     public GameObject coinView;
 
-   
+
 
     /// <summary>
     /// 水晶數量
@@ -49,10 +49,15 @@ public class BattleManager : MonoBehaviour
 
     private bool myTurn;
     protected int crystalTotal;
+    protected string sceneName;
+    protected float pos;
 
-   protected virtual void Start()
+    protected virtual void Start()
     {
         instance = this;
+
+        sceneName = "我方場地";
+        pos = 30;
     }
 
     /// <summary>
@@ -72,7 +77,7 @@ public class BattleManager : MonoBehaviour
         crystalTotal = Mathf.Clamp(crystalTotal, 1, 10);        //夾住最大水晶數量
         crystal = crystalTotal;
         Crystal();
-        StartCoroutine(GetCard(1,DeckManager.instance,-200,-275));
+        StartCoroutine(GetCard(1, DeckManager.instance, -200, -275));
     }
     /// <summary>
     /// 開始遊戲
@@ -101,13 +106,13 @@ public class BattleManager : MonoBehaviour
     /// rotation.x 為-1 -背面
     /// rotation.x 為 0 -正面
     /// </summary>
-   protected virtual void CheckCoin()
+    protected virtual void CheckCoin()
     {
         //三元運算子
         //先後攻 = 布林運算? 成立 : 不成立
         //print(coin.transform.GetChild(0).position.y);
 
-        firstAttack = coin.transform.GetChild(0).position.y > 0.25 ?  true: false;
+        firstAttack = coin.transform.GetChild(0).position.y > 0.25 ? true : false;
 
         coinView.SetActive(false);  //隱藏金幣畫面
 
@@ -118,18 +123,18 @@ public class BattleManager : MonoBehaviour
             crystalTotal = 1;
             crystal = 1;
             card = 4;
-            
+
         }
         Crystal();
 
-       StartCoroutine(GetCard(card,DeckManager.instance,-200,-275));
+        StartCoroutine(GetCard(card, DeckManager.instance, -200, -275));
     }
 
     /// <summary>
     /// 處理水晶數量
     /// </summary>
     protected void Crystal()
-    { 
+    {
         //顯示目前有幾顆水晶
         for (int i = 0; i < crystal; i++)
         {
@@ -153,42 +158,44 @@ public class BattleManager : MonoBehaviour
     /// <summary>
     /// 抽牌組卡牌到手牌組
     /// </summary>
-    protected  IEnumerator GetCard(int count,DeckManager deck,int rightY,int handY)
+    protected IEnumerator GetCard(int count, DeckManager deck, int rightY, int handY)
     {
         for (int i = 0; i < count; i++)
         {
-        //抽牌組第一張 放到 手牌 第一張 
-        battleDeck.Add(deck.deck[0]);
-        //刪除 牌組第一張
-        deck.deck.RemoveAt(0);
-        //抽牌組第一張物件 放到 手牌 第一張
-        handGameObject.Add(deck.deckGameObject[0]);
-         //刪除 牌組第一張遊戲物件
-        deck.deckGameObject.RemoveAt(0);
+            //抽牌組第一張 放到 手牌 第一張 
+            battleDeck.Add(deck.deck[0]);
+            //刪除 牌組第一張
+            deck.deck.RemoveAt(0);
+            //抽牌組第一張物件 放到 手牌 第一張
+            handGameObject.Add(deck.deckGameObject[0]);
+            //刪除 牌組第一張遊戲物件
+            deck.deckGameObject.RemoveAt(0);
 
             //等待協程執行結束
-       yield return StartCoroutine(MoveCard(rightY,handY));
+            yield return StartCoroutine(MoveCard(rightY, handY));
         }
-        
+
     }
     /// <summary>
     /// 手牌數量
     /// </summary>
     public int handCardCount;
 
+    
+
     /// <summary>
     /// 顯示卡牌在移動到手上
     /// </summary>
     /// <returns></returns>
-    private IEnumerator MoveCard(int rightY,int handY)
-    {   
+    private IEnumerator MoveCard(int rightY, int handY)
+    {
         RectTransform card = handGameObject[handGameObject.Count - 1].GetComponent<RectTransform>();        //取得手排最後一張[數量-1]
 
         //進入右手邊中間位置
         card.SetParent(canvas);                     //將父物件設為畫布
         card.anchorMin = Vector2.one * 0.5f;       //設定中心點
         card.anchorMax = Vector2.one * 0.5f;       //設定中心點
-      
+
 
         while (card.anchoredPosition.x > 501)       //當 x >500 執行移動
         {
@@ -200,7 +207,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(0.35f);
 
         //爆牌
-        if(handCardCount == 10)
+        if (handCardCount == 10)
         {
             card.GetChild(1).GetComponent<Image>().material = Instantiate(card.GetChild(1).GetComponent<Image>().material);
             card.GetChild(0).GetChild(0).GetComponent<Image>().material = Instantiate(card.GetChild(0).GetChild(0).GetComponent<Image>().material);
@@ -216,7 +223,7 @@ public class BattleManager : MonoBehaviour
 
             for (int i = 0; i < texts.Length; i++) texts[i].enabled = false;
 
-            while (m.GetFloat("AlphaClip") <4)               //當 透明度 <4
+            while (m.GetFloat("AlphaClip") < 4)               //當 透明度 <4
             {
                 a += 0.1f;                  //透明度 遞增
                 m.SetFloat("AlphaClip", a); //設定浮點數
@@ -228,24 +235,26 @@ public class BattleManager : MonoBehaviour
             handGameObject.RemoveAt(handGameObject.Count - 1);
         }
         else
-        { 
-        //進入手牌
-        card.localScale = Vector3.one * 0.5f;       //縮小
-
-        bool con = true;
-
-        while (card.anchoredPosition.y > -274)       //當 y >-27 執行移動
         {
+            //進入手牌
+            card.localScale = Vector3.one * 0.5f;       //縮小
+
+            bool con = true;
+
+            while (con)       //當 y >-27 執行移動
+            {
                 if (handY < 0) con = card.anchoredPosition.y > handY + 1;
                 else con = card.anchoredPosition.y < handY - 1;
-            card.anchoredPosition = Vector2.Lerp(card.anchoredPosition, new Vector2(0, handY), 0.5f * Time.deltaTime * 50);
+                card.anchoredPosition = Vector2.Lerp(card.anchoredPosition, new Vector2(0, handY), 0.5f * Time.deltaTime * 50);
 
-            yield return null;                  //等待一個影格
+                yield return null;                  //等待一個影格
 
-        }
-        card.SetParent(handArea);                           //受定父物件為手牌區域
-        card.gameObject.AddComponent<HandCard>();           //添加手牌腳本 - 可拖拉
-        handCardCount++;                                    //手牌數量遞增
+            }
+            card.SetParent(handArea);                           //受定父物件為手牌區域
+            card.gameObject.AddComponent<HandCard>();           //添加手牌腳本 - 可拖拉
+            card.gameObject.GetComponent<HandCard>().sceneName = sceneName;
+            card.gameObject.GetComponent<HandCard>().pos = pos;
+            handCardCount++;                                    //手牌數量遞增
         }
     }
 }

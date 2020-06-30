@@ -29,10 +29,10 @@ public class DeckManager : MonoBehaviour
     public Button btnStart;
     [Header("洗牌後牌組")]
     public Transform tranShuffle;
-  
 
-  
-    
+
+
+
 
     /// <summary>
     /// 牌組管理器實體物件
@@ -53,7 +53,7 @@ public class DeckManager : MonoBehaviour
 
     protected virtual void Update()
     {
-       if(Input.GetKeyDown(KeyCode.Alpha1)) Choose30Card();
+        if (Input.GetKeyDown(KeyCode.Alpha1)) Choose30Card();
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ public class DeckManager : MonoBehaviour
     /// </summary>
     protected virtual void Choose30Card()
     {
-        while(deck.Count < 30)
+        while (deck.Count < 30)
         {
             int r = Random.Range(1, GetCard.instance.cards.Length + 1);
 
@@ -96,15 +96,15 @@ public class DeckManager : MonoBehaviour
             if (sameCard.Count < 2)
             {
 
-            //牌組.增加(去德卡牌.實體物件.卡牌資料[編號])
-            deck.Add(card);
+                //牌組.增加(去德卡牌.實體物件.卡牌資料[編號])
+                deck.Add(card);
 
-            Transform temp;
+                Transform temp;
 
-                if (sameCard.Count <1)
+                if (sameCard.Count < 1)
                 {
                     //生成 牌組卡牌資訊物件 到 牌組內容
-                    temp =  Instantiate(DeckObject, contentDeck).transform;
+                    temp = Instantiate(DeckObject, contentDeck).transform;
                     //添加牌組物件腳本，讓按鈕有功能
                     temp.gameObject.AddComponent<DeckObject>().index = card.index;
                     temp.name = "牌組卡牌資訊:" + card.name;
@@ -113,19 +113,19 @@ public class DeckManager : MonoBehaviour
                 {
                     temp = GameObject.Find("牌組卡牌資訊:" + card.name).transform;
                 }
-            
-           
 
-            //更新卡牌數量
-            
-            
-            temp.Find("消耗").GetComponent<Text>().text = card.cost.ToString();
-            temp.Find("名稱").GetComponent<Text>().text = card.name;
-            temp.Find("數量").GetComponent<Text>().text = (sameCard.Count+1).ToString();
 
-            textDeckCount.text = "套牌數量:" + deck.Count + " / 30 ";
+
+                //更新卡牌數量
+
+
+                temp.Find("消耗").GetComponent<Text>().text = card.cost.ToString();
+                temp.Find("名稱").GetComponent<Text>().text = card.name;
+                temp.Find("數量").GetComponent<Text>().text = (sameCard.Count + 1).ToString();
+
+                textDeckCount.text = "套牌數量:" + deck.Count + " / 30 ";
             }
-            }
+        }
         //如果卡牌  等於 30 張 啟動開始遊戲按鈕 互動
         if (deck.Count == 30) btnStart.interactable = true;
     }
@@ -148,7 +148,7 @@ public class DeckManager : MonoBehaviour
         Transform temp = GameObject.Find("牌組卡牌資訊:" + card.name).transform;
 
         //相同卡牌 > 1
-        if (sameCard.Count >1)
+        if (sameCard.Count > 1)
         {
             //更新 牌組物件 數量
             temp.Find("數量").GetComponent<Text>().text = (sameCard.Count - 1).ToString();
@@ -199,7 +199,7 @@ public class DeckManager : MonoBehaviour
         for (int i = 0; i < deck.Count; i++)
         {
             //變形 = 生成(物件,父物件).變形
-            Transform temp = Instantiate(GetCard.instance.cardObject,tranShuffle).transform;
+            Transform temp = Instantiate(GetCard.instance.cardObject, tranShuffle).transform;
             //卡片資料
             CardData card = deck[i];
             //尋找子物件並更新文字
@@ -212,7 +212,7 @@ public class DeckManager : MonoBehaviour
             temp.Find("遮色片").Find("圖片").GetComponent<Image>().sprite = Resources.Load<Sprite>(card.file);
 
             //添加元件<圖鑑卡牌> 編號 = 卡牌.編號
-            temp.gameObject.AddComponent<BookCard>().index = card.index;
+            //temp.gameObject.AddComponent<BookCard>().index = card.index;
             //將生出來的卡牌物件放到清單內
             deckGameObject.Add(temp.gameObject);
         }
@@ -222,9 +222,9 @@ public class DeckManager : MonoBehaviour
     /// 開始遊戲
     /// </summary>
     private void StartBattle()
-    { 
+    {
         Shuffle();
         BattleManager.instance.StartBattle();
     }
-    
+
 }

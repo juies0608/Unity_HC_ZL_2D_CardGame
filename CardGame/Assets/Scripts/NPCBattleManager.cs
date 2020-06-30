@@ -7,6 +7,9 @@ public class NPCBattleManager : BattleManager
     protected override void Start()
     {
         instanceNPC = this;
+
+        sceneName = "NPC方場地";
+        pos = -260;
     }
 
     protected override void CheckCoin()
@@ -14,6 +17,7 @@ public class NPCBattleManager : BattleManager
         firstAttack = !instance.firstAttack;
 
         int card = 3;
+
 
         if (firstAttack)
         {

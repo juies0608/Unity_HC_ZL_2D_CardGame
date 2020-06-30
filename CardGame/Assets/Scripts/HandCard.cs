@@ -8,22 +8,18 @@ using UnityEngine.EventSystems;
 /// IBeginDragHandler 開始拖拉
 /// IDragHandler        拖拉中 
 /// IEndDragHandler     拖拉結束
-public class HandCard : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler
+public class HandCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     /// <summary>
-/// 卡牌座標資訊
-/// </summary>
+    /// 卡牌座標資訊
+    /// </summary>
     private RectTransform rect;
 
-    /// <summary>
-    /// 場景名稱
-    /// </summary>
-    public string sceneName;
     /// <summary>
     /// 場地
     /// </summary>
     public Transform scene;
-    
+
 
     /// <summary>
     ///原始做標
@@ -40,6 +36,15 @@ public class HandCard : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
     /// </summary>
     private int crystalCost;
 
+    /// <summary>
+    /// 場景名稱
+    /// </summary>
+    public string sceneName;
+    /// <summary>
+    /// 手牌脫拉進場地位置
+    /// </summary>
+    public float pos;
+
     private void Start()
     {
         rect = GetComponent<RectTransform>();
@@ -48,6 +53,7 @@ public class HandCard : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
         //int.Parse("123");     字串轉數值
         crystalCost = int.Parse(transform.Find("消耗").GetComponent<Text>().text);
 
+        //取得場地物件
         scene = GameObject.Find(sceneName).transform;
 
     }
@@ -68,7 +74,7 @@ public class HandCard : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
     {
         if (inScene) return;            //如果 在場內 就跳出
         //此卡牌.座標 = 拖拉.座標
-        transform.position = eventData.position; 
+        transform.position = eventData.position;
     }
 
     /// <summary>
@@ -76,7 +82,11 @@ public class HandCard : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
     /// </summary>
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (rect.anchoredPosition.y >=30)   //如果開放時 y 軸 >=30
+        bool con;
+        if (sceneName.Contains("NPC")) con = rect.anchoredPosition.y <= pos;
+        else con = rect.anchoredPosition.y >= pos;
+        
+        if (rect.anchoredPosition.y >= 30)   //如果開放時 y 軸 >=30
         {
             checkCrystal();
         }
@@ -91,7 +101,7 @@ public class HandCard : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHan
     /// </summary>
     private void checkCrystal()
     {
-        if(crystalCost <= BattleManager.instance.crystal)
+        if (crystalCost <= BattleManager.instance.crystal)
         {
             inScene = true;                 //是否在場景上 = 是
             transform.SetParent(scene);     //父物建設為:場地

@@ -20,6 +20,6 @@ public class NPCDeckManager :DeckManager
     {
         base.Choose30Card();
 
-        Invoke("Shffle", 1);
+        Invoke("Shuffle", 1);
     }
 }
